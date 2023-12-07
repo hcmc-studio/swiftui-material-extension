@@ -16,8 +16,8 @@ public struct ElevatedCardView<Content>: MaterialView where Content: View {
     
     public var body: some View {
         Group {
-            content(currentColor())
-        }   .background(currentColor().surfaceContainerLow)
+            content(currentColorScheme)
+        }   .background(currentColorScheme.surfaceContainerLow)
             .cornerRadius(12)
             .elevation(style: .current1(colorScheme: colorScheme))
     }

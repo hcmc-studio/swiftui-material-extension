@@ -13,7 +13,7 @@ public protocol MaterialView: View {
 }
 
 extension MaterialView {
-    public func currentColor() -> MaterialColorScheme {
-        return colors.current(colorScheme: colorScheme)
+    public var currentColorScheme: MaterialColorScheme {
+        colors.current(colorScheme: colorScheme)
     }
 }

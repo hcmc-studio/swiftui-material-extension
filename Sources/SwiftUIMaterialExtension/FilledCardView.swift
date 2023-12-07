@@ -16,8 +16,8 @@ struct FilledCardView<Content>: MaterialView where Content: View {
     
     public var body: some View {
         Group {
-            content(currentColor())
-        }   .background(currentColor().surfaceContainerLow)
+            content(currentColorScheme)
+        }   .background(currentColorScheme.surfaceContainerLow)
             .cornerRadius(12)
     }
 }

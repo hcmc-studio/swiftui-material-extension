@@ -141,8 +141,6 @@ private let designKitDefaultNeutralVariant = {
     return palette
 }()
 
-
-
 @available(iOS 13.0, *)
 extension Color {
     public struct Material {
@@ -180,7 +178,46 @@ extension Color {
     }
 }
 
-@available(iOS 13.0, *)
+extension Color.Material {
+    public enum Preset {
+//        case primary(element: PresetElement),
+//             secondary(element: PresetElement),
+//             tertiary(element: PresetElement),
+//             error(element: PresetElement)
+        case primary,
+             secondary,
+             tertiary,
+             error
+        
+        public func element(colors: MaterialColorScheme) -> PresetElement {
+            switch self {
+            case .primary:
+                colors.primaryPresetElement
+            case .secondary:
+                colors.secondaryPresetElement
+            case .tertiary:
+                colors.tertiaryPresetElement
+            case .error:
+                colors.errorPresetElement
+            }
+        }
+    }
+    
+    public struct PresetElement {
+        public let preset: Color
+        public let onPreset: Color
+        public let presetContainer: Color
+        public let onPresetContainer: Color
+        
+        public init(preset: Color, onPreset: Color, presetContainer: Color, onPresetContainer: Color) {
+            self.preset = preset
+            self.onPreset = onPreset
+            self.presetContainer = presetContainer
+            self.onPresetContainer = onPresetContainer
+        }
+    }
+}
+
 extension Color.Material {
     public struct Light {
         public let palettes: Palettes
@@ -437,4 +474,38 @@ public protocol MaterialColorScheme {
     // Other
     var scrim: Color { get }
     var shadow: Color { get }
+}
+
+extension MaterialColorScheme {
+//    public var primaryPreset: Color.Material.Preset {
+//        .primary(element: primaryPresetElement)
+//    }
+    
+    public var primaryPresetElement: Color.Material.PresetElement {
+        .init(preset: primary, onPreset: onPrimary, presetContainer: primaryContainer, onPresetContainer: onPrimaryContainer)
+    }
+    
+//    public var secondaryPreset: Color.Material.Preset {
+//        .secondary(element: secondaryPresetElement)
+//    }
+    
+    public var secondaryPresetElement: Color.Material.PresetElement {
+        .init(preset: secondary, onPreset: onSecondary, presetContainer: secondaryContainer, onPresetContainer: onSecondaryContainer)
+    }
+    
+//    public var tertiaryPreset: Color.Material.Preset {
+//        .tertiary(element: tertiaryPresetElement)
+//    }
+    
+    public var tertiaryPresetElement: Color.Material.PresetElement {
+        .init(preset: tertiary, onPreset: onTertiary, presetContainer: tertiaryContainer, onPresetContainer: onTertiaryContainer)
+    }
+    
+//    public var errorPreset: Color.Material.Preset {
+//        .error(element: errorPresetElement)
+//    }
+    
+    public var errorPresetElement: Color.Material.PresetElement {
+        .init(preset: error, onPreset: onError, presetContainer: errorContainer, onPresetContainer: onErrorContainer)
+    }
 }

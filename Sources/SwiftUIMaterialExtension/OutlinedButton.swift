@@ -1,5 +1,5 @@
 //
-//  FilledButton.swift
+//  OutlinedButton.swift
 //
 //
 //  Created by Ji-Hwan Kim on 12/7/23.
@@ -8,7 +8,7 @@
 import SwiftUI
 
 @available(iOS 15.0, *)
-public struct FilledButton: MaterialView {
+public struct OutlinedButton: MaterialView {
     @Environment(\.colorScheme)
     public var colorScheme
     @Environment(\.isEnabled)
@@ -61,16 +61,16 @@ public struct FilledButton: MaterialView {
                     .foregroundStyle(foregroundColor())
                 Spacer().frame(width: 24)
             }
-        })  .buttonStyle(FilledButtonStyle(colors: currentColorScheme, colorPresetElement: colorPresetElement))
+        })  .buttonStyle(OutlinedButtonStyle(colors: currentColorScheme, colorPresetElement: colorPresetElement))
             .clipShape(.capsule(style: .continuous))
     }
     
     func foregroundColor() -> Color {
         if isEnabled {
             if isFocused {
-                return colorPresetElement.onPreset.opacity(0.92)
+                return colorPresetElement.preset.opacity(0.92)
             } else {
-                return colorPresetElement.onPreset
+                return colorPresetElement.preset
             }
         } else {
             return currentColorScheme.onSurface.opacity(0.12)
@@ -79,7 +79,7 @@ public struct FilledButton: MaterialView {
 }
 
 @available(iOS 14.0, *)
-private struct FilledButtonStyle: ButtonStyle {
+private struct OutlinedButtonStyle: ButtonStyle {
     public var colors: MaterialColorScheme
     public var colorPresetElement: Color.Material.PresetElement
     @Environment(\.colorScheme)
@@ -98,12 +98,12 @@ private struct FilledButtonStyle: ButtonStyle {
     func backgroundColor(isPressed: Bool) -> Color {
         if isEnabled {
             if isFocused || isPressed {
-                return colorPresetElement.preset.opacity(0.92)
+                return colorPresetElement.preset.opacity(0.12)
             } else {
-                return colorPresetElement.preset
+                return .clear
             }
         } else {
-            return colors.onSurface.opacity(0.12)
+            return .clear
         }
     }
 }
@@ -111,24 +111,24 @@ private struct FilledButtonStyle: ButtonStyle {
 #Preview {
     VStack {
         if #available(iOS 15.0, *) {
-            FilledButton(colors: .designKitDefault, label: "Hello")
+            OutlinedButton(colors: .designKitDefault, label: "Hello")
             
-            FilledButton(colors: .designKitDefault, label: "Hello")
+            OutlinedButton(colors: .designKitDefault, label: "Hello")
                 .disabled(true)
             
-            FilledButton(colors: .designKitDefault, colorPreset: .secondary, label: "Hello")
+            OutlinedButton(colors: .designKitDefault, colorPreset: .secondary, label: "Hello")
             
-            FilledButton(colors: .designKitDefault, colorPreset: .secondary, label: "Hello")
+            OutlinedButton(colors: .designKitDefault, colorPreset: .secondary, label: "Hello")
                 .disabled(true)
             
-            FilledButton(colors: .designKitDefault, colorPreset: .tertiary, label: "Hello")
+            OutlinedButton(colors: .designKitDefault, colorPreset: .tertiary, label: "Hello")
             
-            FilledButton(colors: .designKitDefault, colorPreset: .tertiary, label: "Hello")
+            OutlinedButton(colors: .designKitDefault, colorPreset: .tertiary, label: "Hello")
                 .disabled(true)
             
-            FilledButton(colors: .designKitDefault, colorPreset: .error, label: "Hello")
+            OutlinedButton(colors: .designKitDefault, colorPreset: .error, label: "Hello")
             
-            FilledButton(colors: .designKitDefault, colorPreset: .error, label: "Hello")
+            OutlinedButton(colors: .designKitDefault, colorPreset: .error, label: "Hello")
                 .disabled(true)
         } else {
             // Fallback on earlier versions

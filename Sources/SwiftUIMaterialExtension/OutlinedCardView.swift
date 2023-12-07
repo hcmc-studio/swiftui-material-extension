@@ -16,13 +16,13 @@ public struct OutlinedCardViewView<Content>: MaterialView where Content: View {
     
     public var body: some View {
         Group {
-            content(currentColor())
-        }   .background(currentColor().surface)
+            content(currentColorScheme)
+        }   .background(currentColorScheme.surface)
             .cornerRadius(12)
             .overlay(
                 RoundedRectangle(cornerRadius: 12)
                     .inset(by: 0.5)
-                    .stroke(currentColor().outlineVariant, lineWidth: 1)
+                    .stroke(currentColorScheme.outlineVariant, lineWidth: 1)
             )
     }
 }
