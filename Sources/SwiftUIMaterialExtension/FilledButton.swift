@@ -21,6 +21,13 @@ public struct FilledButton: MaterialView {
     public var icon: Image? = nil
     public var action: (() -> Void)? = nil
     
+    public init(colors: Color.Material, label: String, icon: Image? = nil, action: (() -> Void)? = nil) {
+        self.colors = colors
+        self.label = label
+        self.icon = icon
+        self.action = action
+    }
+    
     public var body: some View {
         Button(action: {
             if let action = action {
