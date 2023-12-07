@@ -44,13 +44,15 @@ public struct OutlinedButton: MaterialView {
                 action()
             }
         }, label: {
-            HStack {
+            HStack(spacing: 0) {
                 if let icon = icon {
                     Spacer().frame(width: 16)
                     icon
                         .resizable()
                         .frame(width: 12, height: 12)
+                        .padding(.all, 3)
                         .foregroundStyle(foregroundColor())
+                    Spacer().frame(width: 8)
                 } else {
                     Spacer().frame(width: 24)
                 }
@@ -63,15 +65,24 @@ public struct OutlinedButton: MaterialView {
             }
         })  .buttonStyle(OutlinedButtonStyle(colors: currentColorScheme, colorPresetElement: colorPresetElement))
             .clipShape(.capsule(style: .continuous))
+            .overlay(
+                Capsule()
+                    .inset(by: 0.5)
+                    .stroke(outlineColor())
+            )
     }
     
     func foregroundColor() -> Color {
         if isEnabled {
-            if isFocused {
-                return colorPresetElement.preset.opacity(0.92)
-            } else {
-                return colorPresetElement.preset
-            }
+            return colorPresetElement.preset
+        } else {
+            return currentColorScheme.onSurface.opacity(0.12)
+        }
+    }
+    
+    func outlineColor() -> Color {
+        if isEnabled {
+            return currentColorScheme.outline
         } else {
             return currentColorScheme.onSurface.opacity(0.12)
         }
@@ -92,7 +103,6 @@ private struct OutlinedButtonStyle: ButtonStyle {
     func makeBody(configuration: Configuration) -> some View {
         configuration.label
             .background(backgroundColor(isPressed: configuration.isPressed))
-            .elevation(style: .current1(colorScheme: colorScheme)) { configuration.isPressed }
     }
     
     func backgroundColor(isPressed: Bool) -> Color {
@@ -109,27 +119,28 @@ private struct OutlinedButtonStyle: ButtonStyle {
 }
 
 #Preview {
-    VStack {
+    HStack {
         if #available(iOS 15.0, *) {
-            OutlinedButton(colors: .designKitDefault, label: "Hello")
-            
-            OutlinedButton(colors: .designKitDefault, label: "Hello")
-                .disabled(true)
-            
-            OutlinedButton(colors: .designKitDefault, colorPreset: .secondary, label: "Hello")
-            
-            OutlinedButton(colors: .designKitDefault, colorPreset: .secondary, label: "Hello")
-                .disabled(true)
-            
-            OutlinedButton(colors: .designKitDefault, colorPreset: .tertiary, label: "Hello")
-            
-            OutlinedButton(colors: .designKitDefault, colorPreset: .tertiary, label: "Hello")
-                .disabled(true)
-            
-            OutlinedButton(colors: .designKitDefault, colorPreset: .error, label: "Hello")
-            
-            OutlinedButton(colors: .designKitDefault, colorPreset: .error, label: "Hello")
-                .disabled(true)
+            VStack {
+                OutlinedButton(colors: .designKitDefault, label: "Label")
+                OutlinedButton(colors: .designKitDefault, label: "Label").disabled(true)
+                OutlinedButton(colors: .designKitDefault, colorPreset: .secondary, label: "Label")
+                OutlinedButton(colors: .designKitDefault, colorPreset: .secondary, label: "Label").disabled(true)
+                OutlinedButton(colors: .designKitDefault, colorPreset: .tertiary, label: "Label")
+                OutlinedButton(colors: .designKitDefault, colorPreset: .tertiary, label: "Label").disabled(true)
+                OutlinedButton(colors: .designKitDefault, colorPreset: .error, label: "Label")
+                OutlinedButton(colors: .designKitDefault, colorPreset: .error, label: "Label").disabled(true)
+            }
+            VStack {
+                OutlinedButton(colors: .designKitDefault, label: "Label", icon: .init(systemName: "plus"))
+                OutlinedButton(colors: .designKitDefault, label: "Label", icon: .init(systemName: "plus")).disabled(true)
+                OutlinedButton(colors: .designKitDefault, colorPreset: .secondary, label: "Label", icon: .init(systemName: "plus"))
+                OutlinedButton(colors: .designKitDefault, colorPreset: .secondary, label: "Label", icon: .init(systemName: "plus")).disabled(true)
+                OutlinedButton(colors: .designKitDefault, colorPreset: .tertiary, label: "Label", icon: .init(systemName: "plus"))
+                OutlinedButton(colors: .designKitDefault, colorPreset: .tertiary, label: "Label", icon: .init(systemName: "plus")).disabled(true)
+                OutlinedButton(colors: .designKitDefault, colorPreset: .error, label: "Label", icon: .init(systemName: "plus"))
+                OutlinedButton(colors: .designKitDefault, colorPreset: .error, label: "Label", icon: .init(systemName: "plus")).disabled(true)
+            }
         } else {
             // Fallback on earlier versions
         }
